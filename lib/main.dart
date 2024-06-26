@@ -1,11 +1,12 @@
 import 'dart:math';
 
+import 'package:animation_example/second_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MaterialApp(
+    home: ImplicitAnimation(),
+  ));
 }
 
 class MainApp extends StatefulWidget {
@@ -40,30 +41,41 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) => Transform(
-              alignment: Alignment.center,
-              transform: Matrix4.identity()..rotateY(_animation.value),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          blurRadius: 7,
-                          spreadRadius: 5,
-                          offset: const Offset(0, 3))
-                    ]),
-                width: 100,
-                height: 100,
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) => Transform(
+                alignment: Alignment.center,
+                transform: Matrix4.identity()..rotateY(_animation.value),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            blurRadius: 7,
+                            spreadRadius: 5,
+                            offset: const Offset(0, 3))
+                      ]),
+                  width: 100,
+                  height: 100,
+                ),
               ),
             ),
-          ),
+            FilledButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ImplicitAnimation(),
+                      ));
+                },
+                child: const Text("Next Page")),
+          ],
         ),
       ),
     );
